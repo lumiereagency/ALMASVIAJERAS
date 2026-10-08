@@ -6,3 +6,7 @@ node_modules/
 coverage/
 *.log
 .DS_Store
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.claude/
