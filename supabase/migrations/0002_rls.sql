@@ -22,11 +22,16 @@ create policy user_roles_admin_write on user_roles for all using (is_admin()) wi
 create policy traveler_self on traveler_profiles for all using (user_id = auth.uid()) with check (user_id = auth.uid());
 create policy traveler_staff on traveler_profiles for select using (is_staff());
 
--- Enviajador: vitrine pública só de ativos; dono edita (sem alterar status); admin gere tudo
-create policy env_public_read on enviajador_profiles for select using (status = 'active' or user_id = auth.uid() or is_staff());
+-- Enviajador: tabela só para dono/equipe; vitrine pública via view (sem user_id). Dono edita sem alterar status.
+create function my_enviajador_status() returns enviajador_status language sql stable security definer set search_path = public as $
+  select status from enviajador_profiles where user_id = auth.uid() $;
+create policy env_owner_read on enviajador_profiles for select using (user_id = auth.uid() or is_staff());
 create policy env_owner_update on enviajador_profiles for update
   using (user_id = auth.uid())
-  with check (user_id = auth.uid() and status = (select status from enviajador_profiles where user_id = auth.uid()));
+  with check (user_id = auth.uid() and status = my_enviajador_status());
+create view public_enviajadores with (security_invoker = false) as
+  select slug, display_name, bio, avatar_path from enviajador_profiles where status = 'active';
+grant select on public_enviajadores to anon, authenticated;
 create policy env_admin_all on enviajador_profiles for all using (is_admin()) with check (is_admin());
 
 -- ───────── Catálogo ─────────

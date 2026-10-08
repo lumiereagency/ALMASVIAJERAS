@@ -81,6 +81,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<Rec
         )}
 
         <div className="results__actions">
+          <Link href={`/contacto?${primary[0] || alternatives[0] ? `exp=${byId.get((primary[0] ?? alternatives[0])!.experienceId)!.slug}&` : ''}${serializeAnswers(answers)}`} className="btn btn--gradient">
+            Hablar con un asesor
+          </Link>
           <Link href={edit} className="btn btn--secondary">
             Ajustar mis respuestas
           </Link>

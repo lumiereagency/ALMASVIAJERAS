@@ -1,7 +1,8 @@
 import { currentPrice } from '@/domain/catalog';
 import type { Currency } from '@/domain/money';
 import { SEED_EXPERIENCES, type SeedExperience } from '@/content/catalog-seed';
-import { createClient } from '@/lib/supabase/server';
+import { unstable_cache } from 'next/cache';
+import { createAnonClient } from '@/lib/supabase/anon';
 
 /** Fonte única do catálogo: usada por vitrine, quiz e painel do Enviajador. */
 export interface CatalogExperience {
@@ -95,16 +96,19 @@ function fromSeed(s: SeedExperience): CatalogExperience {
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
-export async function listPublishedExperiences(): Promise<CatalogExperience[]> {
-  const supabase = await createClient();
+/** Catálogo público: cliente anônimo (sem cookies) + cache de 5 min, para aguentar tráfego alto sem consultar o banco a cada visita. */
+async function fetchPublished(): Promise<CatalogExperience[]> {
+  const supabase = createAnonClient();
   if (!supabase) return SEED_EXPERIENCES.map(fromSeed);
   const { data, error } = await supabase.from('experiences').select(SELECT).eq('status', 'published').order('title');
   if (error) throw new Error(`Catálogo indisponible: ${error.message}`);
   return ((data ?? []) as unknown as Row[]).map((r) => toCatalogExperience(r, todayISO()));
 }
 
-export async function getPublishedExperience(slug: string): Promise<CatalogExperience | null> {
-  const supabase = await createClient();
+export const listPublishedExperiences = unstable_cache(fetchPublished, ['catalog-list'], { revalidate: 300, tags: ['catalog'] });
+
+async function fetchOne(slug: string): Promise<CatalogExperience | null> {
+  const supabase = createAnonClient();
   if (!supabase) {
     const s = SEED_EXPERIENCES.find((e) => e.slug === slug);
     return s ? fromSeed(s) : null;
@@ -113,3 +117,5 @@ export async function getPublishedExperience(slug: string): Promise<CatalogExper
   if (error) throw new Error(`Catálogo indisponible: ${error.message}`);
   return data ? toCatalogExperience(data as unknown as Row, todayISO()) : null;
 }
+
+export const getPublishedExperience = unstable_cache(fetchOne, ['catalog-one'], { revalidate: 300, tags: ['catalog'] });

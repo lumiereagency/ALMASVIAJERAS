@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   title: 'Experiencias',
   description: 'Viajes diseñados para lo que hoy te mueve: naturaleza, cultura, bienestar y conexión.',
 };
-export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   const experiences = await listPublishedExperiences();

@@ -5,7 +5,6 @@ import { SiteFooter, SiteHeader } from '@/components/marketing/SiteChrome';
 import { formatMoney, nightsLabel } from '@/domain/catalog';
 import { getPublishedExperience } from '@/lib/catalog/queries';
 
-export const dynamic = 'force-dynamic';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -56,9 +55,8 @@ export default async function Page({ params }: Props) {
             ))}
           </section>
         )}
-        {/* Captura de lead (formulario + consentimiento) llega en la siguiente etapa. */}
-        <Link href="/alma-nawi" className="btn btn--gradient" style={{ alignSelf: 'flex-start' }}>
-          Quiero esta experiencia →
+                <Link href={`/contacto?exp=${e.slug}`} className="btn btn--gradient btn--lg" style={{ alignSelf: 'flex-start' }}>
+          Hablar con un asesor →
         </Link>
       </main>
       <SiteFooter />
