@@ -19,4 +19,4 @@ export function formatMoney(amount: number, currency: Currency): string {
   return `${SYMBOL[currency]}${n} ${currency}`;
 }
 
-export const nightsLabel = (days: number): string => `${days} días · ${Math.max(days - 1, 0)} noches`;
+export const nightsLabel = (days: number): string => (days === 1 ? '1 día' : `${days} días · ${days - 1} noches`);

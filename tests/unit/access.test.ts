@@ -44,5 +44,8 @@ describe('catálogo', () => {
     expect(formatMoney(18900, 'MXN')).toBe('$18,900 MXN');
     expect(formatMoney(1200.5, 'EUR')).toBe('€1,200.5 EUR');
   });
-  it('rótulo de duração', () => expect(nightsLabel(5)).toBe('5 días · 4 noches'));
+  it('rótulo de duração', () => {
+    expect(nightsLabel(5)).toBe('5 días · 4 noches');
+    expect(nightsLabel(1)).toBe('1 día');
+  });
 });

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Sun, Tag, ArrowRight } from '@/components/ui/icons';
 import { Photo, type Tone } from '@/components/ui/Photo';
-import { formatMoney } from '@/domain/catalog';
+import { formatMoney, nightsLabel } from '@/domain/catalog';
 import type { CatalogExperience } from '@/lib/catalog/queries';
 
 const TONES: Tone[] = ['forest', 'sunset', 'dusk', 'sea', 'sakura'];
@@ -15,7 +15,7 @@ export function ExperienceCard({ e, index = 0 }: { e: CatalogExperience; index?:
         <h3 className="h3">{e.title}</h3>
         <p className="meta">
           <span>
-            <Sun width={16} height={16} /> {e.durationDays} días · {Math.max(e.durationDays - 1, 0)} noches
+            <Sun width={16} height={16} /> {nightsLabel(e.durationDays)}
           </span>
           <span>
             <Tag width={16} height={16} /> {e.price ? `Desde ${formatMoney(e.price.amount, e.price.currency)}` : 'Precio a consultar'}

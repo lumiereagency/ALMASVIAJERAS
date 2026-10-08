@@ -47,3 +47,13 @@ Auditada contra `docs/visual-identity.md`: labels ≥ 12 px, botões ≥ 44 px (
 
 **Pendente (bloqueia o visual premium):** fotografia real. `content/landing.ts` aponta `photo: null` → fundo de reserva. Colocar arquivos em `public/photos/` e preencher os caminhos. Textos e preços marcados SAMPLE (mockup) e o depoimento de "Mariana López" **não são reais**; o botão de vídeo só aparece com `VIP.videoUrl`.
 Menu: o mockup traz Viajes/Experiencias/Destinos/Enviajadores/Nosotros; o documento pede Experiencias/Alma Nawi/Enviajadores. Usei a união sem "Viajes" (redundante com Experiencias).
+
+## Fotografia e conteúdo (revisão 3)
+
+- Fotos baixadas de almasviajeras.com.mx com autorização expressa do proprietário (08/10/2026): 11 arquivos, convertidos para WebP e **sem metadados** (o original `viajes-grupales.jpg` trazia GPS no EXIF) em `public/photos/`. Os originais ficam fora do repositório.
+- `content/landing.ts` agora usa conteúdo real do site atual (8 tours com nome, 1 dia e preço "Desde"; filosofia do fundador). Os exemplos do mockup (Grécia, Peru, Japão, depoimento de "Mariana López") foram removidos.
+- **Confirmar:** o site mostra "$949" sem moeda; assumimos **MXN**. Estatísticas (+600 viajeros, 7+ años) e o RNT ficam fora da landing até validação documental (escopo §9).
+- `xcaret.webp` tem só 480 px (original do site): usar em tamanho pequeno ou trocar. `viajes-personalizados.webp` (1122 px) está no banner largo da filosofia; trocar por versão maior se existir.
+- Não usada na landing (reservadas para Enviajadores e viagens grupais): `viajes-grupales.webp`.
+- A viagem grupal "Colombia 2026" (1–11 ago 2026) já passou; não entra na landing.
+- O site atual usa "Travel Partners"; no produto novo o nome público é "Enviajadores" (escopo §9).

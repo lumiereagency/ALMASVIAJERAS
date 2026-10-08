@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SiteFooter, SiteHeader } from '@/components/marketing/SiteChrome';
 import { ArrowRight, Crown, Diamond, Heart, Mountain, Palm, People, Play, Star, Sun, Tag } from '@/components/ui/icons';
 import { Photo } from '@/components/ui/Photo';
-import { DESTINATIONS, FEATURED, HERO, TESTIMONIAL, VIP } from '@/content/landing';
+import { DESTINATIONS, FEATURED, HERO, PHILOSOPHY, VIP } from '@/content/landing';
 
 const INTENTS = [
   { label: 'Descansar', key: 'descanso', Icon: Palm },
@@ -53,7 +53,7 @@ export default function Home() {
             </div>
           </div>
           <div className="hero__media">
-            <Photo src={HERO.photo} alt={HERO.alt} tone={HERO.tone} sizes="(max-width: 960px) 100vw, 50vw" priority />
+            <Photo src={HERO.photo} alt={HERO.alt} tone={HERO.tone} position={HERO.position} sizes="(max-width: 960px) 100vw, 50vw" priority />
             <div className="hero__caption">
               <div>
                 <span className="eyebrow">{HERO.place}</span>
@@ -85,17 +85,17 @@ export default function Home() {
           <div className="exp-grid">
             {FEATURED.map((e, i) => (
               <Link key={e.slug} href={`/experiencias/${e.slug}`} className={`exp-card ${i === 0 ? 'exp-card--lead' : ''}`}>
-                <Photo src={e.photo} alt={e.alt} tone={e.tone} sizes={i === 0 ? '(max-width: 860px) 100vw, 55vw' : '(max-width: 860px) 100vw, 40vw'} />
+                <Photo src={e.photo} alt={e.alt} tone={e.tone} position={e.position} sizes={i === 0 ? '(max-width: 860px) 100vw, 55vw' : '(max-width: 860px) 100vw, 40vw'} />
                 <span className="pill">{e.badge}</span>
                 <div className="exp-card__body">
                   <span className="exp-card__place">{e.place}</span>
                   <h3 className="h3">{e.title}</h3>
                   <p className="meta">
                     <span>
-                      <Sun width={16} height={16} /> {e.days} días · {e.nights} noches
+                      <Sun width={16} height={16} /> {e.days === 1 ? '1 día' : e.days + ' días'}
                     </span>
                     <span>
-                      <Tag width={16} height={16} /> Desde {e.price}
+                      <Tag width={16} height={16} /> {e.price}
                     </span>
                   </p>
                 </div>
@@ -129,7 +129,7 @@ export default function Home() {
             </div>
             <div className="vip__story">
               <div className="vip__thumb">
-                <Photo src={VIP.story.photo} alt={VIP.story.alt} tone={VIP.story.tone} sizes="(max-width: 860px) 100vw, 30vw" />
+                <Photo src={VIP.story.photo} alt={VIP.story.alt} tone={VIP.story.tone} position={VIP.story.position} sizes="(max-width: 860px) 100vw, 30vw" />
                 {VIP.videoUrl && (
                   <a href={VIP.videoUrl} className="play-btn" aria-label="Reproducir video">
                     <Play width={20} height={20} />
@@ -161,9 +161,9 @@ export default function Home() {
           <ul className="dest-grid">
             {DESTINATIONS.map((d) => (
               <li key={d.name}>
-                <Link href={`/destinos/${d.name.toLowerCase()}`} className="dest">
+                <Link href={`/destinos/${d.slug}`} className="dest">
                   <span className="dest__img">
-                    <Photo src={d.photo} alt={d.alt} tone={d.tone} sizes="(max-width: 700px) 50vw, 25vw" />
+                    <Photo src={d.photo} alt={d.alt} tone={d.tone} position={d.position} sizes="(max-width: 700px) 50vw, 25vw" />
                   </span>
                   <strong>{d.name}</strong>
                   <span>{d.line}</span>
@@ -175,18 +175,16 @@ export default function Home() {
 
         {/* 5 · Comunidad */}
         <section className="community" aria-labelledby="com-title">
-          <Photo src={TESTIMONIAL.photo} alt={TESTIMONIAL.alt} tone={TESTIMONIAL.tone} sizes="100vw" />
+          <Photo src={PHILOSOPHY.photo} alt={PHILOSOPHY.alt} tone={PHILOSOPHY.tone} position={PHILOSOPHY.position} sizes="100vw" />
           <div className="container community__inner">
-            <p className="eyebrow">Comunidad Enviajadores</p>
+            <p className="eyebrow">Nuestra filosofía</p>
             <h2 id="com-title" className="h1-lg">
-              Personas reales.
-              <br />
-              Historias extraordinarias.
+              {PHILOSOPHY.motto}
             </h2>
-            <blockquote>“{TESTIMONIAL.quote}”</blockquote>
+            <blockquote>“{PHILOSOPHY.quote}”</blockquote>
             <p className="community__who">
-              <strong>{TESTIMONIAL.name}</strong>
-              <span>{TESTIMONIAL.role}</span>
+              <strong>{PHILOSOPHY.name}</strong>
+              <span>{PHILOSOPHY.role}</span>
             </p>
           </div>
         </section>

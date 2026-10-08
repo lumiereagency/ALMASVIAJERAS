@@ -1,35 +1,40 @@
 /**
- * Conteúdo da landing. Itens marcados SAMPLE vêm do mockup aprovado e NÃO são dados reais:
- * substituir por catálogo (tabela `experiences`) e depoimentos verificados antes de publicar.
- * `photo: null` = usa o fundo de reserva até existir fotografia em /public/photos.
+ * Conteúdo da landing, tomado do site atual (almasviajeras.com.mx, com autorização do proprietário).
+ * Fotografias em /public/photos (WebP, sem EXIF). Os tours viram registros de `experiences` quando o
+ * catálogo existir no banco; até lá esta é a fonte.
+ *
+ * ATENÇÃO: o site atual exibe preços como "$949" sem moeda. Assumimos MXN (agência mexicana); confirmar.
  */
+export type Tone = 'sea' | 'sunset' | 'forest' | 'sakura' | 'dusk';
+
 export interface Slot {
   photo: string | null;
   alt: string;
-  tone: 'sea' | 'sunset' | 'forest' | 'sakura' | 'dusk';
+  tone: Tone;
+  /** object-position da fotografia (ponto focal). */
+  position?: string;
 }
 
 export const HERO: Slot & { place: string; caption: string } = {
-  photo: null,
-  alt: 'Viajera frente a un mar turquesa en la Riviera Maya',
+  photo: '/photos/isla-mujeres.webp',
+  alt: 'Viajera caminando de la mano sobre aguas turquesa de Isla Mujeres',
   tone: 'sea',
-  place: 'Riviera Maya, México',
+  position: '50% 35%',
+  place: 'Isla Mujeres, Quintana Roo',
   caption: 'Aguas turquesa, historias que se quedan contigo.',
 };
 
-// SAMPLE
 export const FEATURED = [
-  { slug: 'cenotes-alma-caribena', badge: 'Naturaleza · Bienestar', place: 'Riviera Maya, México', title: 'Cenotes sagrados y alma caribeña', days: 5, nights: 4, price: '$18,900 MXN', photo: null, alt: 'Nadadora en un cenote iluminado por rayos de sol', tone: 'forest' },
-  { slug: 'grecia-islas-mediterraneo', badge: 'Cultura · Exploración', place: 'Grecia', title: 'Islas, historia y vida mediterránea', days: 8, nights: 7, price: '$32,400 MXN', photo: null, alt: 'Pueblo blanco con cúpulas azules al atardecer', tone: 'sunset' },
-  { slug: 'peru-montanas-proposito', badge: 'Conexión · Aventura', place: 'Perú', title: 'Montañas, cultura y propósito', days: 7, nights: 6, price: '$24,800 MXN', photo: null, alt: 'Machu Picchu entre nubes', tone: 'dusk' },
+  { slug: 'bacalar', badge: 'Naturaleza · Descanso', place: 'Quintana Roo', title: 'Bacalar, la laguna de los siete colores', days: 1, price: 'Desde $949 MXN', photo: '/photos/bacalar.webp', alt: 'Palapa sobre la laguna de Bacalar', tone: 'sea', position: '50% 40%' },
+  { slug: 'tulum', badge: 'Cultura · Mar', place: 'Quintana Roo', title: 'Tulum: selva, mar y cenotes', days: 1, price: 'Desde $1,199 MXN', photo: '/photos/tulum.webp', alt: 'Ruinas mayas de Tulum frente al Caribe', tone: 'sea', position: '50% 55%' },
+  { slug: 'las-coloradas', badge: 'Aventura · Único', place: 'Yucatán', title: 'Las Coloradas, el mar rosa de México', days: 1, price: 'Desde $1,599 MXN', photo: '/photos/las-coloradas.webp', alt: 'Laguna rosa de Las Coloradas', tone: 'sunset', position: '50% 60%' },
 ] as const;
 
-// SAMPLE
 export const DESTINATIONS = [
-  { name: 'México', line: 'Naturaleza, cultura y alma caribeña', photo: null, alt: 'Playa con palmeras', tone: 'sea' },
-  { name: 'Grecia', line: 'Historia, islas y vida mediterránea', photo: null, alt: 'Santorini', tone: 'sunset' },
-  { name: 'Perú', line: 'Aventura, cultura y propósito', photo: null, alt: 'Machu Picchu', tone: 'forest' },
-  { name: 'Japón', line: 'Tradición, equilibrio y asombro', photo: null, alt: 'Monte Fuji y cerezos', tone: 'sakura' },
+  { slug: 'cozumel', name: 'Cozumel', line: 'Arrecife, snorkel y experiencias VIP', photo: '/photos/cozumel.webp', alt: 'Mujer flotando en aguas cristalinas de Cozumel', tone: 'sea', position: '50% 40%' },
+  { slug: 'holbox', name: 'Holbox', line: 'La isla del fin del mundo', photo: '/photos/holbox.webp', alt: 'Garza sobre una barca en Holbox', tone: 'sea', position: '50% 60%' },
+  { slug: 'chichen-itza', name: 'Chichén Itzá', line: 'Maravilla del mundo maya', photo: '/photos/chichen-itza.webp', alt: 'Pirámide de Kukulcán en Chichén Itzá', tone: 'forest', position: '50% 35%' },
+  { slug: 'xcaret', name: 'Xcaret', line: 'Parque, cultura y naturaleza', photo: '/photos/xcaret.webp', alt: 'Viajeras nadando en un río de Xcaret', tone: 'forest', position: '50% 70%' },
 ] as const;
 
 export const VIP = {
@@ -40,19 +45,21 @@ export const VIP = {
     { icon: 'diamond', label: 'Beneficios en aliados' },
     { icon: 'heart', label: 'Comunidad de Enviajadores' },
   ],
-  story: { title: 'Mira cómo nuestros viajes transforman vidas', photo: null as string | null, alt: 'Tortuga marina nadando', tone: 'sea' as const },
+  story: { title: 'Acompañamiento humano antes, durante y después de tu viaje', photo: '/photos/experiencias-tours.webp', alt: 'Grupo de viajeros en Chichén Itzá', tone: 'sea' as Tone, position: '50% 55%' },
   /** Sin video real no se muestra botón de reproducir. */
   videoUrl: null as string | null,
 };
 
-// SAMPLE: reemplazar por testimonio real y autorizado
-export const TESTIMONIAL = {
-  quote: 'Almas Viajeras me regaló un viaje que cambió mi forma de ver el mundo. Conocí lugares increíbles, pero sobre todo, personas que hoy son parte de mi vida.',
-  name: 'Mariana López',
-  role: 'Enviajadora desde 2022',
-  photo: null as string | null,
-  alt: 'Viajero sentado frente a un atardecer sobre el mar',
-  tone: 'dusk' as const,
+/** Filosofía publicada por la agencia en su sitio actual. */
+export const PHILOSOPHY = {
+  quote: 'Creemos que viajar no es escapar de tu vida, sino encontrarte con ella. Cada tour, cada viaje grupal, cada itinerario personalizado está diseñado para que regreses diferente: más libre, más conectado, más tú.',
+  motto: 'No vendemos vuelos. Acompañamos almas.',
+  name: 'Jesús Ibarra, “Chuy Mochilero”',
+  role: 'Fundador de Almas Viajeras',
+  photo: '/photos/viajes-personalizados.webp',
+  alt: 'Viajero contemplando el atardecer sobre el mar en un pueblo blanco del Mediterráneo',
+  tone: 'dusk' as Tone,
+  position: '60% 55%',
 };
 
 export const SOCIAL = [{ label: 'Instagram', href: 'https://instagram.com/almasviajerasmx' }];
