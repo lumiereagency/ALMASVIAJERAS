@@ -60,3 +60,14 @@ Proxy laranja ligado, SSL "Full (strict)", cache de `/photos/*`, `/brand/*`, `/_
 ## Anonimização / exclusão de dados (LFPDPPP)
 
 Sob solicitação do titular: anonimizar o lead (nome, telefone, e-mail, cidade) e marcar `anonymized_at`; vendas e comissões permanecem (registro financeiro) sem dados pessoais. Procedimento manual documentado; rotina automática fica para a próxima fase.
+
+## Painel, PWA e notificações
+
+- **PWA:** `app/manifest.ts`, `public/sw.js` (cache de estáticos, página offline, push) e ícones em `public/icons` (gerados por `node scripts/make-icons.mjs`). O service worker só registra em produção (HTTPS). O botão de instalar aparece em `/ajustes` e nos painéis.
+- **Notificações dentro do app:** a tabela `notifications` é preenchida por gatilhos (novo lead → equipe/admin; lead atribuído e mudanças de comissão → Enviajador). Sino no topo de cada painel.
+- **Push no dispositivo (fora do app):** o navegador já pede permissão e guarda a assinatura em `push_subscriptions`. Para **enviar**, falta: gerar chaves VAPID (`npx web-push generate-vapid-keys`), definir `NEXT_PUBLIC_VAPID_PUBLIC_KEY` (build) e a chave privada só no servidor, e um emissor (Edge Function ou rota) que leia `notifications` novas. **Não implementado nesta versão.**
+
+## Pagamentos (gateways)
+
+Tabelas `payments` e `payment_providers` + tela `/admin/pagos`. Já funciona o **cobro manual** (transferência/efectivo): registrar, marcar pago, reembolsar, com saldo por venda.
+Para ligar um gateway: (1) definir as chaves **no servidor** (nunca no banco/cliente): Stripe `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`; Mercado Pago `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_WEBHOOK_SECRET`; PayPal `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_WEBHOOK_ID`; (2) implementar o adaptador (criar checkout + verificar assinatura do webhook + conciliar em `payments`). Hoje `/api/webhooks/[provider]` responde **501** de propósito: nunca confirmar pagamento sem verificar a assinatura.

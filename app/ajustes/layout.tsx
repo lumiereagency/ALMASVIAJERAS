@@ -1,9 +1,10 @@
 import { Frame } from '@/components/app/Frame';
+import { areaOf } from '@/lib/app-nav';
 import { requireRole } from '@/lib/auth/session';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  await requireRole('/admin');
-  return <Frame area="admin">{children}</Frame>;
+  const s = await requireRole('/ajustes');
+  return <Frame area={areaOf(s.roles)}>{children}</Frame>;
 }

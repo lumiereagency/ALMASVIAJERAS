@@ -166,3 +166,107 @@ export const Sparkle = (p: P) => (
     <path d="M12 3.5 13.9 10 20.5 12 13.9 14 12 20.5 10.1 14 3.5 12 10.1 10 12 3.5Z" />
   </Icon>
 );
+
+export const Grid = (p: P) => (
+  <Icon {...p}>
+    <rect x="4" y="4" width="6.5" height="6.5" rx="1.8" />
+    <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8" />
+    <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8" />
+    <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8" />
+  </Icon>
+);
+export const Inbox = (p: P) => (
+  <Icon {...p}>
+    <path d="M4 13.5 6.5 5h11L20 13.5V19H4v-5.5Z" />
+    <path d="M4 13.5h4.5l1 2h5l1-2H20" />
+  </Icon>
+);
+export const Wallet = (p: P) => (
+  <Icon {...p}>
+    <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3" />
+    <rect x="4" y="8" width="16" height="11" rx="2.5" />
+    <circle cx="16" cy="13.5" r="1.1" fill="currentColor" />
+  </Icon>
+);
+export const CreditCard = (p: P) => (
+  <Icon {...p}>
+    <rect x="3.5" y="6" width="17" height="12" rx="2.5" />
+    <path d="M3.5 10.5h17M7 15h3" />
+  </Icon>
+);
+export const Trending = (p: P) => (
+  <Icon {...p}>
+    <path d="m4 16 5-5 3.5 3.5L20 7" />
+    <path d="M15 7h5v5" />
+  </Icon>
+);
+export const Users = (p: P) => (
+  <Icon {...p}>
+    <circle cx="9" cy="8.5" r="3" />
+    <path d="M3.5 19c.6-3 2.7-4.8 5.5-4.8s4.9 1.8 5.5 4.8" />
+    <path d="M15.5 6a2.8 2.8 0 0 1 0 5.4M17 14.5c1.9.5 3 2 3.4 4.5" />
+  </Icon>
+);
+export const Shield = (p: P) => (
+  <Icon {...p}>
+    <path d="M12 3.5 5 6v5.5c0 4 2.8 7 7 9 4.2-2 7-5 7-9V6l-7-2.5Z" />
+    <path d="m9 12 2.2 2.2L15.5 10" />
+  </Icon>
+);
+export const Bell = (p: P) => (
+  <Icon {...p}>
+    <path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15L6 16.5Z" />
+    <path d="M10 20.5a2.2 2.2 0 0 0 4 0" />
+  </Icon>
+);
+export const Settings = (p: P) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="3" />
+    <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6" />
+  </Icon>
+);
+export const LogOut = (p: P) => (
+  <Icon {...p}>
+    <path d="M10 4.5H6.5A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5H10" />
+    <path d="M14 8l4 4-4 4M18 12H9.5" />
+  </Icon>
+);
+export const Calendar = (p: P) => (
+  <Icon {...p}>
+    <rect x="4" y="5.5" width="16" height="14.5" rx="2.5" />
+    <path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" />
+  </Icon>
+);
+export const Download = (p: P) => (
+  <Icon {...p}>
+    <path d="M12 4v10M7.5 10 12 14.5 16.5 10M5 19.5h14" />
+  </Icon>
+);
+export const Smartphone = (p: P) => (
+  <Icon {...p}>
+    <rect x="7" y="3" width="10" height="18" rx="2.5" />
+    <path d="M11 17.5h2" />
+  </Icon>
+);
+export const LinkIcon = (p: P) => (
+  <Icon {...p}>
+    <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1" />
+    <path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" />
+  </Icon>
+);
+export const Receipt = (p: P) => (
+  <Icon {...p}>
+    <path d="M6 3.5h12V21l-2.5-1.6L13 21l-2.5-1.6L8 21l-2-1.6V3.5Z" />
+    <path d="M9 8h6M9 12h6" />
+  </Icon>
+);
+export const ChevronRight = (p: P) => (
+  <Icon {...p}>
+    <path d="m9 6 6 6-6 6" />
+  </Icon>
+);
+export const ChevronLeft = (p: P) => (
+  <Icon {...p}>
+    <path d="m15 6-6 6 6 6" />
+  </Icon>
+);

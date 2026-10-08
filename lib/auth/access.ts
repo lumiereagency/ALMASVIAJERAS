@@ -6,6 +6,7 @@ const PRIVATE: { prefix: string; roles: Role[] }[] = [
   { prefix: '/equipe', roles: ['staff', 'admin'] },
   { prefix: '/enviajador', roles: ['enviajador'] },
   { prefix: '/viajante', roles: ['traveler'] },
+  { prefix: '/ajustes', roles: ['traveler', 'enviajador', 'staff', 'admin'] },
 ];
 
 const matches = (pathname: string, prefix: string) => pathname === prefix || pathname.startsWith(prefix + '/');

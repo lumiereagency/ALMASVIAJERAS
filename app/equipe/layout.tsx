@@ -1,16 +1,9 @@
-import { AppShell } from '@/components/ui/AppShell';
+import { Frame } from '@/components/app/Frame';
 import { requireRole } from '@/lib/auth/session';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const s = await requireRole('/equipe');
-  return (
-    <AppShell
-      area="Equipo"
-      nav={[{ href: '/equipe', label: 'Leads' }, ...(s.roles.includes('admin') ? [{ href: '/admin', label: 'Administración' }] : [])]}
-    >
-      {children}
-    </AppShell>
-  );
+  return <Frame area={s.roles.includes('admin') ? 'admin' : 'equipe'}>{children}</Frame>;
 }
