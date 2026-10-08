@@ -95,7 +95,7 @@ ul { padding: 0; list-style: none; }
 .mobile-menu__panel { position: absolute; right: 0; top: calc(100% + 12px); min-width: 230px; display: flex; flex-direction: column; padding: var(--space-3); background: var(--brand-white); border: 1px solid var(--brand-line); border-radius: var(--radius-card); box-shadow: 0 24px 48px -24px rgba(6, 22, 51, 0.35); }
 .mobile-menu__panel a { padding: 12px var(--space-4); border-radius: var(--radius-control); font-family: var(--font-display); font-weight: 500; }
 .mobile-menu__panel a:hover { background: var(--brand-lavender); }
-@media (max-width: 1040px) { .nav { display: none; } .mobile-menu { display: block; } }
+@media (max-width: 1180px) { .nav { display: none; } .mobile-menu { display: block; } }
 @media (max-width: 700px) { .hide-sm { display: none; } }
 @media (max-width: 520px) { .header-actions .icon-btn { display: none; } .header-actions { gap: var(--space-2); } }
 @media (max-width: 440px) { .header-actions > .btn--sm { display: none; } }
@@ -113,7 +113,7 @@ ul { padding: 0; list-style: none; }
 .intents { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-5); }
 .chips { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 .chip { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 var(--space-5); border: 1px solid var(--brand-line); border-radius: 999px; background: color-mix(in srgb, var(--brand-white) 70%, transparent); font-family: var(--font-display); font-weight: 500; font-size: 0.875rem; transition: border-color 200ms var(--ease), background-color 200ms var(--ease), transform 200ms var(--ease); }
-.chip:first-child { border-color: var(--brand-violet); background: var(--brand-lavender); }
+.intents .chip:first-child { border-color: var(--brand-violet); background: var(--brand-lavender); }
 .chip:hover { border-color: var(--brand-violet); background: var(--brand-lavender); transform: translateY(-1px); }
 .hero__media { position: relative; min-height: clamp(460px, 44vw, 620px); border-radius: 28px 0 0 28px; overflow: hidden; isolation: isolate; color: var(--brand-white); }
 .hero__media::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(6, 22, 51, 0.7) 0%, transparent 45%); }

@@ -1,4 +1,9 @@
+import { formatMoney } from '../catalog';
 import { convert, type Currency, type FxRate } from '../money';
+import { COMPANIONS, INTENTS, REGIONS } from './options';
+
+const label = (list: readonly { value: string; label: string }[], v: string) => list.find((o) => o.value === v)?.label ?? v;
+const days = (n: number) => (n === 1 ? '1 día' : `${n} días`);
 
 export interface ExperienceCriteria {
   id: string;
@@ -50,7 +55,7 @@ export function rankExperiences(
   asOf: string,
 ): Recommendation[] {
   const people = a.adults + a.minors * MINOR_PRICE_FACTOR;
-  if (a.adults < 1) throw new Error('É necessário ao menos 1 adulto');
+  if (a.adults < 1) throw new Error('Se necesita al menos 1 adulto');
 
   const out = experiences.map((e): Recommendation => {
     const reasons: string[] = [];
@@ -64,51 +69,54 @@ export function rankExperiences(
 
     // Orçamento
     if (cost <= a.budgetTotal) {
-      reasons.push(`Cabe no orçamento: ${cost} ${a.currency} para ${a.adults + a.minors} pessoa(s)`);
+      reasons.push(`Cabe en tu presupuesto: ${formatMoney(cost, a.currency)} para ${a.adults + a.minors} ${a.adults + a.minors === 1 ? 'persona' : 'personas'}`);
       score += 15 * (0.5 + 0.5 * (cost / a.budgetTotal)); // aproveitar o orçamento pontua um pouco mais
     } else if (cost <= a.budgetTotal * (1 + BUDGET_TOLERANCE)) {
       soft = true;
-      warnings.push(`Acima do orçamento em ${round(cost - a.budgetTotal)} ${a.currency}`);
+      warnings.push(`Supera tu presupuesto por ${formatMoney(round(cost - a.budgetTotal), a.currency)}`);
     } else {
       excluded = true;
-      warnings.push(`Excede o orçamento (${cost} ${a.currency} > ${a.budgetTotal} ${a.currency})`);
+      warnings.push(`Excede tu presupuesto (${formatMoney(cost, a.currency)} frente a ${formatMoney(a.budgetTotal, a.currency)})`);
     }
 
     // Duração
     if (e.durationDays >= a.durationMin && e.durationDays <= a.durationMax) {
-      reasons.push(`Duração de ${e.durationDays} dias dentro do desejado`);
+      reasons.push(`Dura ${days(e.durationDays)}, dentro de lo que buscas`);
       score += 10;
     } else {
       const gap = e.durationDays < a.durationMin ? a.durationMin - e.durationDays : e.durationDays - a.durationMax;
       if (gap <= DURATION_TOLERANCE_DAYS) {
         soft = true;
-        warnings.push(`Duração de ${e.durationDays} dias fica ${gap} dia fora do intervalo escolhido`);
+        warnings.push(`Dura ${days(e.durationDays)}: ${days(gap)} fuera del rango que elegiste`);
       } else {
         excluded = true;
-        warnings.push(`Duração de ${e.durationDays} dias incompatível com ${a.durationMin}-${a.durationMax}`);
+        warnings.push(`Dura ${days(e.durationDays)}, fuera de tu rango de ${a.durationMin === a.durationMax ? days(a.durationMin) : `${a.durationMin} a ${a.durationMax} días`}`);
       }
     }
 
     // Intenções
     const overlap = a.intents.filter((i) => e.intents.includes(i));
     if (overlap.length) {
-      reasons.push(`Combina com: ${overlap.join(', ')}`);
+      reasons.push(`Combina con lo que quieres vivir: ${overlap.map((i) => label(INTENTS, i)).join(' y ').toLowerCase()}`);
       score += 40 * (overlap.length / a.intents.length);
+    } else {
+      soft = true;
+      warnings.push('No coincide con lo que quieres vivir');
     }
 
     // Região
     if (a.region === 'open') score += 10;
     else if (e.regions.includes(a.region)) {
-      reasons.push(`Destino na região escolhida (${a.region})`);
+      reasons.push(`Está en la región que elegiste: ${label(REGIONS, a.region)}`);
       score += 20;
     } else {
       soft = true;
-      warnings.push(`Fora da região escolhida (${a.region})`);
+      warnings.push(`Está fuera de la región que elegiste (${label(REGIONS, a.region)})`);
     }
 
     // Companhia
     if (e.companions.includes(a.companion)) {
-      reasons.push(`Indicada para viajar ${a.companion}`);
+      reasons.push(`Pensada para viajar ${label(COMPANIONS, a.companion).toLowerCase()}`);
       score += 15;
     }
 

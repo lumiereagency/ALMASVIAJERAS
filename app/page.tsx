@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SiteFooter, SiteHeader } from '@/components/marketing/SiteChrome';
 import { ArrowRight, Crown, Diamond, Heart, Mountain, Palm, People, Play, Star, Sun, Tag } from '@/components/ui/icons';
 import { Photo } from '@/components/ui/Photo';
-import { DESTINATIONS, FEATURED, HERO, PHILOSOPHY, VIP } from '@/content/landing';
+import { DESTINATIONS, FEATURED, HERO, PHILOSOPHY, STATS, VIP } from '@/content/landing';
 
 const INTENTS = [
   { label: 'Descansar', key: 'descanso', Icon: Palm },
@@ -64,6 +64,17 @@ export default function Home() {
               </span>
             </div>
           </div>
+        </section>
+
+        <section className="container" aria-label="Confianza">
+          <ul className="stats">
+            {STATS.map((s) => (
+              <li key={s.label}>
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* 2 · Experiencias curadas */}

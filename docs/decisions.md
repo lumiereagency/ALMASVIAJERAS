@@ -57,3 +57,8 @@ Menu: o mockup traz Viajes/Experiencias/Destinos/Enviajadores/Nosotros; o docume
 - Não usada na landing (reservadas para Enviajadores e viagens grupais): `viajes-grupales.webp`.
 - A viagem grupal "Colombia 2026" (1–11 ago 2026) já passou; não entra na landing.
 - O site atual usa "Travel Partners"; no produto novo o nome público é "Enviajadores" (escopo §9).
+
+## Alma Nawi (revisão 4)
+
+- Preços do catálogo em **USD** (confirmado pelo proprietário, 08/10/2026), constante única `SEED_CURRENCY` em `content/catalog-seed.ts`. Estatísticas (+600, 7+, 100%, 5★) liberadas pelo proprietário e exibidas na landing.
+- Escopo e estado completos: `docs/alma-nawi.md`.

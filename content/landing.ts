@@ -3,8 +3,16 @@
  * Fotografias em /public/photos (WebP, sem EXIF). Os tours viram registros de `experiences` quando o
  * catálogo existir no banco; até lá esta é a fonte.
  *
- * ATENÇÃO: o site atual exibe preços como "$949" sem moeda. Assumimos MXN (agência mexicana); confirmar.
+ * Preços em USD (confirmado pelo proprietário em 08/10/2026), lidos de catalog-seed.ts.
  */
+import { formatMoney } from '@/domain/catalog';
+import { seedBySlug } from './catalog-seed';
+
+const priceOf = (slug: string): string => {
+  const p = seedBySlug(slug)!.price;
+  return `Desde ${formatMoney(p.amount, p.currency)}`;
+};
+
 export type Tone = 'sea' | 'sunset' | 'forest' | 'sakura' | 'dusk';
 
 export interface Slot {
@@ -25,9 +33,9 @@ export const HERO: Slot & { place: string; caption: string } = {
 };
 
 export const FEATURED = [
-  { slug: 'bacalar', badge: 'Naturaleza · Descanso', place: 'Quintana Roo', title: 'Bacalar, la laguna de los siete colores', days: 1, price: 'Desde $949 MXN', photo: '/photos/bacalar.webp', alt: 'Palapa sobre la laguna de Bacalar', tone: 'sea', position: '50% 40%' },
-  { slug: 'tulum', badge: 'Cultura · Mar', place: 'Quintana Roo', title: 'Tulum: selva, mar y cenotes', days: 1, price: 'Desde $1,199 MXN', photo: '/photos/tulum.webp', alt: 'Ruinas mayas de Tulum frente al Caribe', tone: 'sea', position: '50% 55%' },
-  { slug: 'las-coloradas', badge: 'Aventura · Único', place: 'Yucatán', title: 'Las Coloradas, el mar rosa de México', days: 1, price: 'Desde $1,599 MXN', photo: '/photos/las-coloradas.webp', alt: 'Laguna rosa de Las Coloradas', tone: 'sunset', position: '50% 60%' },
+  { slug: 'bacalar', badge: 'Naturaleza · Descanso', place: 'Quintana Roo', title: 'Bacalar, la laguna de los siete colores', days: 1, price: priceOf('bacalar'), photo: '/photos/bacalar.webp', alt: 'Palapa sobre la laguna de Bacalar', tone: 'sea', position: '50% 40%' },
+  { slug: 'tulum', badge: 'Cultura · Mar', place: 'Quintana Roo', title: 'Tulum: selva, mar y cenotes', days: 1, price: priceOf('tulum'), photo: '/photos/tulum.webp', alt: 'Ruinas mayas de Tulum frente al Caribe', tone: 'sea', position: '50% 55%' },
+  { slug: 'las-coloradas', badge: 'Aventura · Único', place: 'Yucatán', title: 'Las Coloradas, el mar rosa de México', days: 1, price: priceOf('las-coloradas'), photo: '/photos/las-coloradas.webp', alt: 'Laguna rosa de Las Coloradas', tone: 'sunset', position: '50% 60%' },
 ] as const;
 
 export const DESTINATIONS = [
@@ -61,5 +69,13 @@ export const PHILOSOPHY = {
   tone: 'dusk' as Tone,
   position: '60% 55%',
 };
+
+/** Estatísticas publicadas pela agência no site atual; uso autorizado pelo proprietário (08/10/2026). */
+export const STATS = [
+  { value: '+600', label: 'Viajeros asesorados' },
+  { value: '7+', label: 'Años viajando' },
+  { value: '100%', label: 'Atención humana' },
+  { value: '5 ★', label: 'Opiniones de viajeros reales' },
+] as const;
 
 export const SOCIAL = [{ label: 'Instagram', href: 'https://instagram.com/almasviajerasmx' }];

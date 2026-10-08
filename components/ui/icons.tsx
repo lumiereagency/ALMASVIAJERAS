@@ -99,3 +99,70 @@ export const Instagram = (p: P) => (
     <circle cx="17" cy="7" r=".6" fill="currentColor" />
   </Icon>
 );
+
+export const User = (p: P) => (
+  <Icon {...p}>
+    <circle cx="12" cy="8" r="3.5" />
+    <path d="M5 20c.8-3.6 3.5-5.5 7-5.5s6.2 1.9 7 5.5" />
+  </Icon>
+);
+export const Home = (p: P) => (
+  <Icon {...p}>
+    <path d="m4 11 8-6.5 8 6.5M6 9.5V20h12V9.5" />
+    <path d="M10 20v-5h4v5" />
+  </Icon>
+);
+export const Compass = (p: P) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" />
+  </Icon>
+);
+export const Waves = (p: P) => (
+  <Icon {...p}>
+    <path d="M3 9c2 0 2-1.5 4.5-1.5S10 9 12 9s2.5-1.5 4.5-1.5S19 9 21 9M3 14c2 0 2-1.5 4.5-1.5S10 14 12 14s2.5-1.5 4.5-1.5S19 14 21 14M3 19c2 0 2-1.5 4.5-1.5S10 19 12 19s2.5-1.5 4.5-1.5S19 19 21 19" />
+  </Icon>
+);
+export const Pin = (p: P) => (
+  <Icon {...p}>
+    <path d="M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0C5.5 15.4 12 21 12 21Z" />
+    <circle cx="12" cy="10" r="2.3" />
+  </Icon>
+);
+export const Clock = (p: P) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 7.5V12l3 2" />
+  </Icon>
+);
+export const Plus = (p: P) => (
+  <Icon {...p}>
+    <path d="M12 5v14M5 12h14" />
+  </Icon>
+);
+export const Minus = (p: P) => (
+  <Icon {...p}>
+    <path d="M5 12h14" />
+  </Icon>
+);
+export const Check = (p: P) => (
+  <Icon {...p}>
+    <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </Icon>
+);
+export const Alert = (p: P) => (
+  <Icon {...p}>
+    <path d="M12 4 2.8 19.5h18.4L12 4Z" />
+    <path d="M12 10v4.2M12 17v.01" />
+  </Icon>
+);
+export const ArrowLeft = (p: P) => (
+  <Icon {...p}>
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </Icon>
+);
+export const Sparkle = (p: P) => (
+  <Icon {...p}>
+    <path d="M12 3.5 13.9 10 20.5 12 13.9 14 12 20.5 10.1 14 3.5 12 10.1 10 12 3.5Z" />
+  </Icon>
+);

@@ -1,5 +1,6 @@
 import { currentPrice } from '@/domain/catalog';
 import type { Currency } from '@/domain/money';
+import { SEED_EXPERIENCES, type SeedExperience } from '@/content/catalog-seed';
 import { createClient } from '@/lib/supabase/server';
 
 /** Fonte única do catálogo: usada por vitrine, quiz e painel do Enviajador. */
@@ -71,11 +72,32 @@ export function toCatalogExperience(r: Row, today: string): CatalogExperience {
   };
 }
 
+/** Sem banco configurado (desenvolvimento), usa o seed no mesmo formato. */
+function fromSeed(s: SeedExperience): CatalogExperience {
+  return {
+    id: s.slug,
+    slug: s.slug,
+    title: s.title,
+    summary: s.summary,
+    description: null,
+    category: s.category,
+    regions: s.regions,
+    intents: s.intents,
+    companions: s.companions,
+    durationDays: s.durationDays,
+    faq: [],
+    price: s.price,
+    coverPath: s.photo,
+    coverAlt: s.alt,
+    departures: [],
+  };
+}
+
 const todayISO = () => new Date().toISOString().slice(0, 10);
 
 export async function listPublishedExperiences(): Promise<CatalogExperience[]> {
   const supabase = await createClient();
-  if (!supabase) return [];
+  if (!supabase) return SEED_EXPERIENCES.map(fromSeed);
   const { data, error } = await supabase.from('experiences').select(SELECT).eq('status', 'published').order('title');
   if (error) throw new Error(`Catálogo indisponible: ${error.message}`);
   return ((data ?? []) as unknown as Row[]).map((r) => toCatalogExperience(r, todayISO()));
@@ -83,7 +105,10 @@ export async function listPublishedExperiences(): Promise<CatalogExperience[]> {
 
 export async function getPublishedExperience(slug: string): Promise<CatalogExperience | null> {
   const supabase = await createClient();
-  if (!supabase) return null;
+  if (!supabase) {
+    const s = SEED_EXPERIENCES.find((e) => e.slug === slug);
+    return s ? fromSeed(s) : null;
+  }
   const { data, error } = await supabase.from('experiences').select(SELECT).eq('slug', slug).eq('status', 'published').maybeSingle();
   if (error) throw new Error(`Catálogo indisponible: ${error.message}`);
   return data ? toCatalogExperience(data as unknown as Row, todayISO()) : null;
