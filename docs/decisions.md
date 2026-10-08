@@ -40,3 +40,10 @@ Snapshot em `leads.attribution_snapshot`, protegido por trigger; alteração só
 - Login, recuperação de senha, logout e guarda por papel (`proxy.ts` + `requireRole`) implementados e verificados **apenas sem Supabase** (rotas privadas redirecionam; públicas respondem). Fluxo real com sessão e RLS **não foi testado**: depende de um projeto Supabase.
 - Catálogo público lê `experiences` publicadas via cliente com sessão (RLS). Seed de homologação em `supabase/seed.sql`.
 - **Pendente:** rate limit no login (tabela `rate_limits` existe, falta o uso), cadastro de Enviajador, CRUD de catálogo no admin, upload de mídia, testes de RLS.
+
+## Landing (revisão 2) — aderência à identidade visual
+
+Auditada contra `docs/visual-identity.md`: labels ≥ 12 px, botões ≥ 44 px (48 px padrão), gradiente só no CTA do hero e no CTA final (demais botões em Noite Profunda), ícones de uma única biblioteca (24 px, traço 1.75), sem emojis, Sora + Inter, foco violeta, movimento 200 ms/700 ms com `prefers-reduced-motion`.
+
+**Pendente (bloqueia o visual premium):** fotografia real. `content/landing.ts` aponta `photo: null` → fundo de reserva. Colocar arquivos em `public/photos/` e preencher os caminhos. Textos e preços marcados SAMPLE (mockup) e o depoimento de "Mariana López" **não são reais**; o botão de vídeo só aparece com `VIP.videoUrl`.
+Menu: o mockup traz Viajes/Experiencias/Destinos/Enviajadores/Nosotros; o documento pede Experiencias/Alma Nawi/Enviajadores. Usei a união sem "Viajes" (redundante com Experiencias).
