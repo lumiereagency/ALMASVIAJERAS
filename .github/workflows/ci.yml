@@ -1,8 +1,13 @@
-name: CI
+name: CI and Deploy
 on:
   pull_request:
   push:
     branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -20,3 +25,33 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
+
+  # Só roda em push no main, depois do CI verde. A chave de deploy só executa o script
+  # /usr/local/bin/almas-deploy no servidor (restrição command= no authorized_keys).
+  deploy:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Preparar SSH
+        env:
+          KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN" > ~/.ssh/known_hosts
+      - name: Deploy no VPS
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+        run: ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes "root@$HOST"
+      - name: Verificar site no ar
+        run: |
+          for i in $(seq 1 10); do
+            code=$(curl -s -o /dev/null -m 10 -w "%{http_code}" https://almasviajeras.tech/api/health || true)
+            [ "$code" = "200" ] && echo "site no ar" && exit 0
+            sleep 5
+          done
+          echo "site nao respondeu apos o deploy" && exit 1
