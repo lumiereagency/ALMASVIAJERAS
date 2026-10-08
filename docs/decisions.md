@@ -34,3 +34,9 @@ Snapshot em `leads.attribution_snapshot`, protegido por trigger; alteração só
 - Rotina de anonimização de lead (`anonymized_at` existe; procedimento não).
 - Políticas de Storage (buckets) ainda não definidas.
 - Testes de RLS por papel (pgTAP ou integração) ainda não escritos.
+
+## Estado de autenticação e catálogo (branch feat/auth-catalog)
+
+- Login, recuperação de senha, logout e guarda por papel (`proxy.ts` + `requireRole`) implementados e verificados **apenas sem Supabase** (rotas privadas redirecionam; públicas respondem). Fluxo real com sessão e RLS **não foi testado**: depende de um projeto Supabase.
+- Catálogo público lê `experiences` publicadas via cliente com sessão (RLS). Seed de homologação em `supabase/seed.sql`.
+- **Pendente:** rate limit no login (tabela `rate_limits` existe, falta o uso), cadastro de Enviajador, CRUD de catálogo no admin, upload de mídia, testes de RLS.
